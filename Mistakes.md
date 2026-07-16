@@ -26,7 +26,7 @@ The problem is asking you to convert the input numbers into a tuple and print it
 
 # 2
 
-#    2.1
+## 2.1
 Tuple par remove() use kiya.
 t = ('pen', 'pencil')
 t.remove('pen')
@@ -47,7 +47,7 @@ tup_input = tuple(tup_input)
 print(tup_input)
 
 
-##2.2
+## 2.2
 lst = ['pen', 'pencil']
 lst.remove('marker')
 
