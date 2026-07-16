@@ -1,4 +1,4 @@
-#1
+# 1
 
 n = int(input())
 t = input().split()
@@ -24,7 +24,7 @@ The problem is asking you to convert the input numbers into a tuple and print it
 
 
 
-#2
+# 2
 
 ##2.1
 Tuple par remove() use kiya.
@@ -35,14 +35,14 @@ t.remove('pen')
 AttributeError: 'tuple' object has no attribute 'remove'
 
 ->Solution
-# Take input from the user in the form of a comma-separated string
+Take input from the user in the form of a comma-separated string
 tup_input =list(map(str, input().split(",")))
 
-# Take the item to be removed from the tuple
+Take the item to be removed from the tuple
 item = input( )
 tup_input.remove(item)
 
-# Your code starts below
+Your code starts below
 tup_input = tuple(tup_input)
 print(tup_input)
 
