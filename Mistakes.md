@@ -63,6 +63,55 @@ Before using remove(x) on a list, ensure x exists in the list. ✅
 
 
 
+# 3
 
-#3
+
+lst_stage.append(i)
+lst_stage.append(j)
+lst_stage.append(k)
+
+if sum(lst_stage) != n:
+    lst.append(lst_stage)
+
+
+->Error / Problem
+
+I was reusing the same list object:
+lst_stage = []
+and repeatedly modifying it using:
+
+append()
+pop()
+Then storing it in:
+
+lst.append(lst_stage)
+Why is this a problem?
+
+Lists are mutable objects.
+
+When we do:
+
+lst.append(lst_stage)
+Python stores a reference to lst_stage, not a separate copy.
+
+->Solution
+lst = []
+
+for i in range(x + 1):
+    for j in range(y + 1):
+        for k in range(z + 1):
+
+            if i + j + k != n:
+                lst.append([i, j, k])
+
+print(lst)
+
+❌ Avoid reusing the same mutable list object with multiple append() and pop() operations.
+Lists are mutable and stored by reference; when generating combinations, create a new list ([i, j, k]) instead of repeatedly modifying and storing the same list object. ✅
+
+
+
+
+
+# 4
 
