@@ -115,3 +115,58 @@ Lists are mutable and stored by reference; when generating combinations, create 
 
 # 4
 
+## Runner-Up Score (Duplicate Maximum)
+
+->Error
+
+```python
+arr.remove(max_ele)
+```
+
+`remove()` deletes **only the first occurrence** of the value. If the maximum appears multiple times, one copy still remains in the list.
+
+Example:
+
+```python
+arr = [2, 3, 6, 6, 5]
+
+arr.remove(6)
+
+print(arr)
+```
+
+Output:
+
+```python
+[2, 3, 6, 5]
+```
+
+The second `6` is still present, so searching for the maximum again returns `6` instead of the runner-up `5`.
+
+---
+
+->Solution
+
+### Method 1
+
+```python
+while max_ele in arr:
+    arr.remove(max_ele)
+
+print(max(arr))
+```
+
+### Method 2 (Better)
+
+```python
+arr = list(set(arr))
+arr.remove(max(arr))
+print(max(arr))
+```
+
+---
+
+->Summary
+
+- `list.remove(value)` removes **only the first matching element**.
+- Remove **all duplicate maximum values** before finding the runner-up.
