@@ -293,3 +293,103 @@ for name in names:
 
 - **Don't remove elements while iterating over the same list.**
 - **Always sort the names before printing if alphabetical order is required.**
+
+
+
+
+#  6
+
+## Captain's Room (Sorting Approach)
+
+## Error
+
+```python
+for i in range(length):
+    if lst_room_numbers[i] == lst_room_numbers[i+1]:
+        i += k
+```
+
+Changing the loop variable (`i += k`) inside a `for` loop **does not affect the next iteration**.
+
+Python automatically assigns the next value from `range()`.
+
+### Example
+
+```python
+for i in range(5):
+    i += 2
+    print(i)
+```
+
+Output:
+
+```
+2
+3
+4
+5
+6
+```
+
+The loop still iterates over `0, 1, 2, 3, 4`.
+
+---
+
+## Error
+
+Checking only the next element is not enough.
+
+```python
+if lst_room_numbers[i] == lst_room_numbers[i+1]:
+```
+
+This only confirms two consecutive elements are equal.
+
+To verify an entire group of size `k`, compare:
+
+```python
+lst_room_numbers[i] == lst_room_numbers[i + k - 1]
+```
+
+Since the list is sorted, if the first and last elements of the group are equal, all `k` elements belong to the same room.
+
+---
+
+## Solution
+
+Use a `while` loop so the index can be updated manually.
+
+```python
+room_numbers.sort()
+
+i = 0
+
+while i < len(room_numbers):
+
+    if i + k - 1 < len(room_numbers) and room_numbers[i] == room_numbers[i + k - 1]:
+        i += k
+    else:
+        print(room_numbers[i])
+        break
+```
+
+---
+
+## Better Solution (Mathematical)
+
+```python
+captain_room = (k * sum(set(rooms)) - sum(rooms)) // (k - 1)
+
+print(captain_room)
+```
+
+This works because every family room appears exactly `k` times, while the Captain's room appears only once.
+
+---
+
+## Summary
+
+- Changing the loop variable inside a `for` loop does **not** change the loop sequence.
+- Use a `while` loop when you need manual index control.
+- After sorting, compare the first and `(k-1)`th element to validate an entire group.
+- The mathematical (`set`) solution is the shortest and most efficient approach.
