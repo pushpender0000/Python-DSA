@@ -393,3 +393,249 @@ This works because every family room appears exactly `k` times, while the Captai
 - Use a `while` loop when you need manual index control.
 - After sorting, compare the first and `(k-1)`th element to validate an entire group.
 - The mathematical (`set`) solution is the shortest and most efficient approach.
+
+
+
+
+
+
+
+
+
+
+
+#  7
+
+## Set Mutations (HackerRank)
+
+## Problem
+
+Given a set `A` and multiple operations (`update`, `intersection_update`, `difference_update`, `symmetric_difference_update`), perform each mutation on `A` and print the sum of the final set.
+
+---
+
+## My Approach
+
+```python
+lst = []
+
+for i in range(iteration):
+    task_i, n_i = input().split()
+    set_i = set(input().split())
+    lst.append(task_i)
+
+for i in range(iteration):
+
+    if lst[i] == "update":
+        A.update(set_i)
+```
+
+---
+
+## Error 1
+
+Only the operation names were stored.
+
+```python
+lst.append(task_i)
+```
+
+The corresponding sets were **not stored**.
+
+During the second loop, `set_i` refers only to the **last input set**, so every operation is performed on the same set.
+
+### Example
+
+Input
+
+```text
+update
+{1,2}
+
+difference_update
+{5,6}
+```
+
+After reading all input,
+
+```python
+set_i = {5,6}
+```
+
+Now both operations use `{5,6}`, which is incorrect.
+
+---
+
+## Error 2
+
+Elements were stored as strings.
+
+```python
+A = set(input().split())
+```
+
+Output becomes
+
+```python
+{'1', '2', '3'}
+```
+
+Instead of
+
+```python
+{1, 2, 3}
+```
+
+Therefore,
+
+```python
+sum(A)
+```
+
+raises
+
+```text
+TypeError
+```
+
+### Solution
+
+Convert every input element into an integer.
+
+```python
+A = set(map(int, input().split()))
+
+other_set = set(map(int, input().split()))
+```
+
+---
+
+## Better Approach
+
+Perform the mutation immediately after reading the input.
+
+```python
+for _ in range(iteration):
+
+    operation, size = input().split()
+
+    other_set = set(map(int, input().split()))
+
+    if operation == "update":
+        A.update(other_set)
+
+    elif operation == "intersection_update":
+        A.intersection_update(other_set)
+
+    elif operation == "difference_update":
+        A.difference_update(other_set)
+
+    elif operation == "symmetric_difference_update":
+        A.symmetric_difference_update(other_set)
+```
+
+No extra list is required.
+
+---
+
+## Python Shortcut (getattr)
+
+Instead of multiple `if-elif` statements, Python can dynamically call a method.
+
+```python
+getattr(A, operation)(other_set)
+```
+
+Example
+
+```python
+operation = "update"
+
+getattr(A, operation)(other_set)
+```
+
+Equivalent to
+
+```python
+A.update(other_set)
+```
+
+If
+
+```python
+operation = "difference_update"
+```
+
+Then
+
+```python
+getattr(A, operation)(other_set)
+```
+
+Equivalent to
+
+```python
+A.difference_update(other_set)
+```
+
+---
+
+## What is getattr()?
+
+### Definition
+
+`getattr()` is a built-in Python function that retrieves an attribute or method of an object dynamically using its name as a string.
+
+### Syntax
+
+```python
+getattr(object, attribute_name)
+```
+
+or
+
+```python
+getattr(object, attribute_name, default)
+```
+
+---
+
+## Learning
+
+- Mutation methods modify the original set.
+- Read the operation and execute it immediately.
+- Do not reuse the last input set for every operation.
+- Use `map(int, ...)` when numeric operations like `sum()` are required.
+- `getattr()` is useful when the method name is available as a string.
+
+---
+
+## Time Complexity
+
+Let:
+
+- `N` = size of set `A`
+- `M` = total elements processed across all other sets
+
+Overall Time Complexity:
+
+```text
+O(M)
+```
+
+Each mutation operation is approximately linear in the size of the other set.
+
+Space Complexity:
+
+```text
+O(N)
+```
+
+---
+
+## Summary
+
+- Every mutation operation has its own corresponding set.
+- Execute the operation immediately after reading its input.
+- Store integers, not strings.
+- `getattr()` can replace long `if-elif` chains when method names are provided dynamically.
