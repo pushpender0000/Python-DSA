@@ -170,3 +170,126 @@ print(max(arr))
 
 - `list.remove(value)` removes **only the first matching element**.
 - Remove **all duplicate maximum values** before finding the runner-up.
+
+
+
+
+
+# 5
+## HackerRank - Nested Lists
+
+### Problem
+
+Store the name and score of each student in a nested list. Print the name(s) of the student(s) having the **second lowest score**. If multiple students have the same second lowest score, print their names in **alphabetical order**.
+
+---
+
+### My Approach
+
+1. Store each student's data as `[name, score]`.
+2. Find the lowest score.
+3. Remove all students having the lowest score.
+4. Find the new lowest score (second lowest).
+5. Print all students having the second lowest score.
+
+---
+
+## Error 1: Removing Elements While Iterating
+
+### Wrong
+
+```python
+for i in lst:
+    if min_score == i[1]:
+        lst.remove(i)
+```
+
+### Why?
+
+When you remove an element while iterating over the same list, the remaining elements shift to the left. The iterator moves to the next index, causing some elements to be skipped.
+
+Example:
+
+```python
+lst = [
+    ["A", 10],
+    ["B", 10],
+    ["C", 20]
+]
+```
+
+Iteration:
+
+```
+Remove A
+
+List becomes
+
+[B, C]
+
+Iterator moves to next index
+
+B is skipped
+```
+
+Result:
+
+```python
+["B", 10]
+```
+
+One minimum-score student is still left in the list.
+
+### Correct
+
+```python
+lst = [i for i in lst if i[1] != min_score]
+```
+
+This creates a new list containing only the required elements.
+
+---
+
+### Error 2: Names Were Not Printed Alphabetically
+
+### Wrong
+
+```python
+for i in lst:
+    if i[1] == min_score:
+        print(i[0])
+```
+
+This prints names in input order.
+
+### Correct
+
+```python
+names = []
+
+for i in lst:
+    if i[1] == min_score:
+        names.append(i[0])
+
+names.sort()
+
+for name in names:
+    print(name)
+```
+
+---
+
+### Learning
+
+- Never modify a list while iterating over it.
+- Use list comprehension to filter elements safely.
+- When the question asks for alphabetical order, sort the names before printing.
+- `list.sort()` modifies the original list.
+- `sorted()` returns a new sorted list.
+
+---
+
+## Summary
+
+- **Don't remove elements while iterating over the same list.**
+- **Always sort the names before printing if alphabetical order is required.**
