@@ -639,3 +639,7 @@ O(N)
 - Execute the operation immediately after reading its input.
 - Store integers, not strings.
 - `getattr()` can replace long `if-elif` chains when method names are provided dynamically.
+
+#  8
+
+class 2 Find torsional angle
