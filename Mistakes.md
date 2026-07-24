@@ -643,3 +643,113 @@ O(N)
 #  8
 
 class 2 Find torsional angle
+
+
+
+#  9 
+## defaultdict – Mistakes & Quick Revision
+
+### 1. Wrong `defaultdict` initialization
+
+❌
+d = defaultdict(lst2)
+
+-> Error:
+TypeError: first argument must be callable or None
+
+-> Solution:
+d = defaultdict(list)
+
+`defaultdict()` needs a callable like `list`, `int`, or `set`.
+`defaultdict(list)` creates an empty `[]` automatically for a missing key.
+
+---
+
+### 2. Wrong input conversion
+
+❌
+n, m = int(input().split())
+
+-> Error:
+`input().split()` returns a list, and `int()` cannot convert the whole list.
+
+-> Solution:
+n, m = map(int, input().split())
+
+`.split()` → ["5", "2"]
+`map(int, ...)` → 5, 2
+
+---
+
+### 3. Checking missing value with `None`
+
+❌
+if d[i] == None:
+    d[i].append(-1)
+
+-> Problem:
+`defaultdict(list)` creates `[]`, not `None`.
+
+-> Solution:
+if not d[i]:
+    d[i].append(-1)
+
+Empty list `[]` is False in Python.
+
+---
+
+### 4. Searching `lst1` repeatedly
+
+❌
+for i in lst2:
+    for index, j in enumerate(lst1):
+        if i == j:
+            d[i].append(index + 1)
+
+-> Problem:
+Scans `lst1` again for every query and can cause duplicate positions for repeated queries.
+
+-> Solution:
+for index, word in enumerate(lst1, start=1):
+    d[word].append(index)
+
+for word in lst2:
+    if word in d:
+        print(*d[word])
+    else:
+        print(-1)
+
+Build the dictionary once, then lookup each query. ✅
+
+---
+
+### 5. Wrong `join()`
+
+❌
+" ".join(str(value))
+
+-> Problem:
+`str([1,2,4])` becomes "[1, 2, 4]", so `join()` works character-by-character.
+
+-> Solution:
+print(*value)
+
+# OR
+" ".join(map(str, value))
+
+`print(*value)` converts:
+[1, 2, 4] → 1 2 4 ✅
+
+---
+
+## Final Trick
+
+Build once → Lookup many times
+
+"a" → [1, 2, 4]
+"b" → [3, 5]
+
+Key concepts:
+- defaultdict(list) → missing key gets []
+- enumerate(lst, start=1) → 1-based indexing
+- print(*lst) → space-separated output
